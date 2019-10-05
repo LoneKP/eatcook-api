@@ -5,3 +5,22 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+bools = [false, true]
+
+users = User.create!([
+    {name: 'Marcus Wilstrup', email: 'mw@gmail.com', password: 'abcdef', password_confirmation: 'abcdef'},
+    {name: 'Lone Kjeldgaard', email: 'lk@gmail.com', password: '123456', password_confirmation: '123456'}
+])
+
+Meal.create!(
+  [*0..10].map do |idx|
+    {
+      name: ['Boller i Karry', 'Svinemørbrad', 'Svensk pølseret', 'Havregryn'].sample,
+      user_id: users.map(&:id).sample,
+      requires_packaging: bools.sample,
+      pickup_time: 10.days.from_now,
+      amount: [*0..5].sample
+    }
+  end
+)
