@@ -2,7 +2,7 @@
 
 class MealsController < ApplicationController
   def index
-    render json: Meal.all.as_json
+    render json: Meal.not_sold_out.as_json
   end
 
   def show
@@ -19,12 +19,13 @@ class MealsController < ApplicationController
       name: params["name"], 
       user_id: @current_user.id,
       pickup_time: pickup_time,
-      requires_packaging: params["packaging"], 
+      cook_provides_packaging: params["packaging"], 
       amount: params["number_of_meals"], 
       description: params["description"], 
       address: params["address"], 
       zip: params["zip"], 
-      city: params["city"]
+      city: params["city"],
+      tags: params["tags"]
     )
   end
 end

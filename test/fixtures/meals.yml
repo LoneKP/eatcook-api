@@ -4,12 +4,12 @@ one:
   user: one
   name: MyString
   pickup_time: 2019-10-04 16:19:07
-  requires_packaging: false
+  cook_provides_packaging: false
   amount: 1
 
 two:
   user: two
   name: MyString
   pickup_time: 2019-10-04 16:19:07
-  requires_packaging: false
+  cook_provides_packaging: false
   amount: 1

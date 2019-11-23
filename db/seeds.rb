@@ -18,7 +18,7 @@ Meal.create!(
     {
       name: ['Boller i Karry', 'Svinemørbrad', 'Svensk pølseret', 'Havregryn'].sample,
       user_id: users.map(&:id).sample,
-      requires_packaging: bools.sample,
+      cook_provides_packaging: bools.sample,
       pickup_time: 10.days.from_now,
       amount: [*0..5].sample
     }
