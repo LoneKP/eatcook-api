@@ -3,13 +3,10 @@ class Meal < ApplicationRecord
   has_many :pickups
   has_many :orders, through: :pickups
 
-  def not_sold_out
-    self.amount > 0
-  end
-
   scope :not_sold_out, -> { where("amount > 0") }
 
-  
+  scope :has_booking, -> { joins(:pickups) }
+
 end
 
 

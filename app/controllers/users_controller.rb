@@ -16,10 +16,12 @@ class UsersController < ApplicationController
     authenticate params[:email], params[:password]
   end
 
-  def test
-    render json: {
-      message: 'You have passed the authentication and authorization test'
-    }
+  def show
+    render json: @current_user.attributes.with_indifferent_access.slice(:name, :email).as_json
+  end
+
+  def update
+    @current_user.update(name: params[:name])
   end
 
   private

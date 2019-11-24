@@ -8,6 +8,14 @@ class OrdersController < ApplicationController
     update_meal
   end
 
+  def meals_you_ate
+    render json: @current_user.meals_you_ate.as_json
+  end
+
+  def meals_you_will_eat
+    render json: @current_user.meals_you_will_eat.as_json
+  end
+
   private
 
   def create_pickup

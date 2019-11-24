@@ -8,6 +8,14 @@ class MealsController < ApplicationController
   def show
     render json: Meal.find(params[:id]).as_json
   end
+  
+  def future_meal_handouts
+    render json: @current_user.meals.has_booking.select { |meal| meal.pickup_time > Time.now }.uniq.as_json
+  end
+
+  def past_meal_handouts
+    render json: @current_user.past_meal_handouts.as_json
+  end
 
   def create
     meal = Meal.new
