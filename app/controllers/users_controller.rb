@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @current_user.update(name: params[:name])
+    @current_user.update(name: params[:name], email: params[:email])
   end
 
   private

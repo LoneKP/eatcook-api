@@ -7,6 +7,5 @@ class Meal < ApplicationRecord
 
   scope :has_booking, -> { joins(:pickups) }
 
+  scope :pickup_time_not_reached, -> { where("pickup_time > ?", Time.now)}
 end
-
-

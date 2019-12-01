@@ -4,12 +4,14 @@ class OrdersController < ApplicationController
     @order = Order.create(user: @current_user)
     @meal = Meal.find(params["mealId"])
     @order_amount = params["orderAmount"]
-    create_pickup
-    update_meal
+    # Pickup.transaction do
+      create_pickup
+      update_meal
+    # end
   end
 
   def meals_you_ate
-    render json: @current_user.meals_you_ate.as_json
+    render json: @current_user.meals_you_ate.as_json 
   end
 
   def meals_you_will_eat
@@ -29,16 +31,15 @@ class OrdersController < ApplicationController
       :city
     )
     pickup = Pickup.create(
-      meal: @meal, 
+      meal: @meal,
       order: @order,
       order_amount: @order_amount
-    ) 
+    )
     pickup.update(attributes)
   end
 
   def update_meal
     @meal.amount = @meal.amount - @order_amount
-    @meal.save 
+    @meal.save
   end
-
 end
