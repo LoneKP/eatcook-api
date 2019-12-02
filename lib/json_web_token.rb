@@ -7,12 +7,12 @@ class JsonWebToken
       payload[:exp] = exp.to_i
 
       # this encodes the user data(payload) with our secret key
-      JWT.encode(payload, Rails.application.secrets.secret_key_base)
+      JWT.encode(payload, secret_key_base)
     end
 
     def decode(token)
       # decodes the token to get user data (payload)
-      body = JWT.decode(token, Rails.application.secrets.secret_key_base)[0]
+      body = JWT.decode(token, secret_key_base)[0]
       HashWithIndifferentAccess.new body
 
     # raise custom error to be handled by custom handler
@@ -20,6 +20,10 @@ class JsonWebToken
       raise ExceptionHandler::ExpiredSignature, e.message
     rescue JWT::DecodeError, JWT::VerificationError => e
       raise ExceptionHandler::DecodeError, e.message
+    end
+
+    def secret_key_base
+      ENV['SECRET_KEY_BASE']
     end
   end
 end
