@@ -5,11 +5,11 @@ class User < ApplicationRecord
   has_many :pickups, through: :orders
 
   def meals_you_ate
-    pickups.where('pickup_time < ?', Time.now)
+    orders.where('pickup_time < ?', Time.now)
   end
 
   def meals_you_will_eat
-    pickups.where('pickup_time > ?', Time.now)
+    orders.where('pickup_time > ?', Time.now)
   end
 
   def future_meal_handouts

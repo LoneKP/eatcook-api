@@ -1,11 +1,20 @@
 class OrdersController < ApplicationController
 
   def create
-    @order = Order.create(user: @current_user)
     @meal = Meal.find(params["mealId"])
     @order_amount = params["orderAmount"]
     # Pickup.transaction do
+    @order = Order.create(
+      user: @current_user,
+      pickup_time: @meal.pickup_time,
+      address: @meal.address,
+      city: @meal.city,
+      zip: @meal.zip,
+      amount: @order_amount
+    )
+    @order_amount.times do
       create_pickup
+    end
       update_meal
     # end
   end
@@ -33,7 +42,6 @@ class OrdersController < ApplicationController
     pickup = Pickup.create(
       meal: @meal,
       order: @order,
-      order_amount: @order_amount
     )
     pickup.update(attributes)
   end

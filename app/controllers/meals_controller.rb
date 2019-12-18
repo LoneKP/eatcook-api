@@ -16,14 +16,11 @@ class MealsController < ApplicationController
   def future_meal_handouts
     meal = Meal.find(params[:id])
 
-    render json: meal.pickups.includes(order: [:user]).as_json(
+    render json: meal.orders.includes(:user, :pickups).uniq.as_json(
       include: {
-        order: {
-          include: {
-            user: {
-              only: [:id, :name]
-            }
-          }
+        user: {},
+        pickups: {
+          only: [:id, :name, :order_id]
         }
       }
     )
