@@ -1,7 +1,7 @@
 class Meal < ApplicationRecord
   belongs_to :user
   has_many :pickups
-  has_many :orders, through: :pickups
+  has_many :orders
 
   scope :not_sold_out, -> { where("amount > 0") }
 

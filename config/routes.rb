@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   post 'user/update', to: 'users#update'
   
   get 'user/meals/pickups/:id', to: 'meals#future_meal_handouts'
+  get 'user/orders/pickups/:id', to: 'orders#future_order_pickups'
 end

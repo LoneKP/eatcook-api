@@ -6,11 +6,13 @@ class OrdersController < ApplicationController
     # Pickup.transaction do
     @order = Order.create(
       user: @current_user,
+      meal_id: @meal.id,
       pickup_time: @meal.pickup_time,
       address: @meal.address,
       city: @meal.city,
       zip: @meal.zip,
-      amount: @order_amount
+      amount: @order_amount,
+      name: @meal.name
     )
     @order_amount.times do
       create_pickup
@@ -20,11 +22,28 @@ class OrdersController < ApplicationController
   end
 
   def meals_you_ate
-    render json: @current_user.meals_you_ate.as_json 
+    render json: @current_user.meals_you_ate.as_json
   end
 
   def meals_you_will_eat
-    render json: @current_user.meals_you_will_eat.as_json
+    render json: @current_user.meals_you_will_eat.includes(:pickups).as_json
+  end
+
+  def future_order_pickups
+    order = Order.find(params[:id])
+
+    render json: order.as_json(
+      include: {
+        meal: {
+          only: [:name, :pickup_time, :address, :zip, :city, :description, :cook_provides_packaging],
+          include: {
+            user: {
+              only: [:name]
+            }
+          }
+        }
+      }
+    )
   end
 
   private
