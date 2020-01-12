@@ -1,4 +1,5 @@
 class Meal < ApplicationRecord
+  has_one_attached :meal_image
   belongs_to :user
   has_many :pickups
   has_many :orders

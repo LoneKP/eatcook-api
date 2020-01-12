@@ -48,5 +48,11 @@ class MealsController < ApplicationController
       city: params["city"],
       tags: params["tags"]
     )
+    render json: meal.slice(:id)
+  end
+
+  def attach_image
+    meal = Meal.find(params[:meal_id])
+    meal.meal_image.attach(params[:image])
   end
 end

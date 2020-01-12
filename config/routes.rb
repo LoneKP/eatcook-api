@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'user/orders/future', to: 'orders#meals_you_will_eat'
   get 'user', to: 'users#show'
   post 'user/update', to: 'users#update'
+  post '/image/:meal_id', to: 'meals#attach_image'
   
   get 'user/meals/pickups/:id', to: 'meals#future_meal_handouts'
   get 'user/orders/pickups/:id', to: 'orders#future_order_pickups'
