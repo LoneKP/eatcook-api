@@ -1,8 +1,9 @@
-class OrdersController < ApplicationController
+# frozen_string_literal: true
 
+class OrdersController < ApplicationController
   def create
-    @meal = Meal.find(params["mealId"])
-    @order_amount = params["orderAmount"]
+    @meal = Meal.find(params['mealId'])
+    @order_amount = params['orderAmount']
     # Pickup.transaction do
     @order = Order.create(
       user: @current_user,
@@ -17,7 +18,7 @@ class OrdersController < ApplicationController
     @order_amount.times do
       create_pickup
     end
-      update_meal
+    update_meal
     # end
   end
 
@@ -35,7 +36,8 @@ class OrdersController < ApplicationController
     render json: order.as_json(
       include: {
         meal: {
-          only: [:name, :pickup_time, :address, :zip, :city, :description, :cook_provides_packaging],
+          methods: :meal_image_url,
+          only: %i[name pickup_time address zip city description cook_provides_packaging],
           include: {
             user: {
               only: [:name]
@@ -50,8 +52,8 @@ class OrdersController < ApplicationController
 
   def create_pickup
     attributes = @meal.attributes.with_indifferent_access.slice(
-      :name, 
-      :pickup_time, 
+      :name,
+      :pickup_time,
       :cook_provides_packaging,
       :description,
       :address,
@@ -60,7 +62,7 @@ class OrdersController < ApplicationController
     )
     pickup = Pickup.create(
       meal: @meal,
-      order: @order,
+      order: @order
     )
     pickup.update(attributes)
   end

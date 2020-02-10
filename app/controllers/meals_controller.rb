@@ -6,9 +6,21 @@ class MealsController < ApplicationController
   end
 
   def show
-    render json: Meal.find(params[:id]).as_json
+    meal = Meal.find(params[:id])
+    if meal&.meal_image&.attached?
+      render json: meal.as_json(
+        methods: :meal_image_url,
+        include: {
+          user: {
+            only: %i[id name email]
+          }
+        }
+      )
+    else
+      render json: meal.as_json
+    end
   end
-  
+
   def future_meals_handouts
     render json: @current_user.future_meal_handouts.uniq.as_json
   end
@@ -20,7 +32,7 @@ class MealsController < ApplicationController
       include: {
         user: {},
         pickups: {
-          only: [:id, :name, :order_id]
+          only: %i[id name order_id]
         }
       }
     )
@@ -32,27 +44,27 @@ class MealsController < ApplicationController
 
   def create
     meal = Meal.new
-    date = params["date"].to_date.to_datetime
-    hour = params["time"].to_time.hour
-    minute = params["time"].to_time.min
-    pickup_time = date.change({ hour: hour, min: minute })
+    date = params['date'].to_date.to_datetime
+    hour = params['time'].to_time.hour
+    minute = params['time'].to_time.min
+    pickup_time = date.change(hour: hour, min: minute)
     meal.update(
-      name: params["name"], 
+      name: params['name'],
       user_id: @current_user.id,
       pickup_time: pickup_time,
-      cook_provides_packaging: params["packaging"], 
-      amount: params["number_of_meals"], 
-      description: params["description"], 
-      address: params["address"], 
-      zip: params["zip"], 
-      city: params["city"],
-      tags: params["tags"]
+      cook_provides_packaging: params['packaging'],
+      amount: params['number_of_meals'],
+      description: params['description'],
+      address: params['address'],
+      zip: params['zip'],
+      city: params['city'],
+      tags: params['tags']
     )
     render json: meal.slice(:id)
   end
 
   def attach_image
     meal = Meal.find(params[:meal_id])
-    meal.meal_image.attach(params[:image])
+    meal.meal_image.attach(params[:file])
   end
 end

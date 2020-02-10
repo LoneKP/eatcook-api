@@ -20,6 +20,7 @@ gem 'devise-jwt'
 gem 'simple_command'
 gem 'pry'
 gem 'factory_bot_rails'
+gem  'google-cloud-storage'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

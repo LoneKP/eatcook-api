@@ -19,9 +19,10 @@ google:
   service: GCS
   project: cookshare
   credentials:
+    type: "service_account"
     project_id: <%= ENV['GOOGLE_CLOUD_PROJECT_ID'] %>
     private_key_id: <%= ENV['GOOGLE_CLOUD_PRIVATE_KEY_ID'] %>
-    private_key: <%= ENV['GOOGLE_CLOUD_PRIVATE_KEY'] %>
+    private_key: <%= ENV['GOOGLE_CLOUD_PRIVATE_KEY'].dump %>
     client_email: <%= ENV['GOOGLE_CLOUD_CLIENT_EMAIL'] %>
     client_id: <%= ENV['GOOGLE_CLOUD_CLIENT_ID'] %>
     client_x509_cert_url: <%= ENV['GOOGLE_CLOUD_CLIENT_X509_CERT_URL'] %>
