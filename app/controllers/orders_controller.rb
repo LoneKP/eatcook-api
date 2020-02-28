@@ -22,12 +22,12 @@ class OrdersController < ApplicationController
     # end
   end
 
-  def meals_you_ate
-    render json: @current_user.meals_you_ate.as_json
+  def meals_ordered_by_user_in_the_past
+    render json: @current_user.meals_ordered_by_user_in_the_past.as_json
   end
 
-  def meals_you_will_eat
-    render json: @current_user.meals_you_will_eat.includes(:pickups).as_json
+  def meals_ordered_by_user_in_the_future
+    render json: @current_user.meals_ordered_by_user_in_the_future.includes(:pickups).as_json
   end
 
   def future_order_pickups

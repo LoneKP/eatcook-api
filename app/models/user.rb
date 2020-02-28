@@ -1,22 +1,27 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
   has_many :meals
   has_many :orders
   has_many :pickups, through: :orders
 
-  def meals_you_ate
+  validates :name, presence: true
+  validates :email, presence: true
+
+  def meals_ordered_by_user_in_the_past
     orders.where('pickup_time < ?', Time.now)
   end
 
-  def meals_you_will_eat
+  def meals_ordered_by_user_in_the_future
     orders.where('pickup_time > ?', Time.now)
   end
 
-  def future_meal_handouts
-    meals.where('pickup_time > ?', Time.now)
+  def meals_cooked_by_user_in_the_past
+    meals.where('pickup_time < ?', Time.now)
   end
 
-  def past_meal_handouts
-    meals.where('pickup_time < ?', Time.now)
+  def meals_to_be_cooked_by_user_in_the_future
+    meals.where('pickup_time > ?', Time.now)
   end
 end

@@ -21,8 +21,8 @@ class MealsController < ApplicationController
     end
   end
 
-  def future_meals_handouts
-    render json: @current_user.future_meal_handouts.uniq.as_json
+  def meals_to_be_cooked_by_user_in_the_future
+    render json: @current_user.meals_to_be_cooked_by_user_in_the_future.uniq.as_json
   end
 
   def future_meal_handouts
@@ -38,8 +38,8 @@ class MealsController < ApplicationController
     )
   end
 
-  def past_meals_handouts
-    render json: @current_user.past_meal_handouts.as_json
+  def meals_cooked_by_user_in_the_past
+    render json: @current_user.meals_cooked_by_user_in_the_past.as_json
   end
 
   def create
