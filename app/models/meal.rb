@@ -6,6 +6,17 @@ class Meal < ApplicationRecord
   has_many :pickups
   has_many :orders
 
+  validates :user,
+            :name,
+            :description,
+            :pickup_time,
+            :cook_provides_packaging,
+            :amount,
+            :address,
+            :city,
+            :zip,
+            presence: true
+
   scope :not_sold_out, -> { where('amount > 0') }
 
   scope :has_booking, -> { joins(:pickups) }

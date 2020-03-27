@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'user/meals/past', to: 'meals#meals_cooked_by_user_in_the_past'
   get 'user/meals/future', to: 'meals#meals_to_be_cooked_by_user_in_the_future'
   get 'user/orders/past', to: 'orders#meals_ordered_by_user_in_the_past'
-  get 'user/orders/future', to: 'orders#meals_ordered_by_user_in_the_future'
+  get 'user/orders/future', to: 'orders#meals_to_be_ordered_by_user_in_the_future'
   get 'user', to: 'users#show'
   post 'user/update', to: 'users#update'
   post '/image/:meal_id', to: 'meals#attach_image'

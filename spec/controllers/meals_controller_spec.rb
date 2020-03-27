@@ -1,36 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe MealsController, type: :controller do
+  it 'sends a json object without an image' do
+    headers = { 'ACCEPT' => 'application/json' }
+    post '/widgets', params: { widget: { name: 'My Widget' } }, headers: headers
+    allow(show).to receive(:call).and_return(:data)
+  end
+  let(:response) {}
 
-  describe 'GET #index' do
-    before do
-      get :index
-    end
-
-    it 'returns http success' do
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'contains JSON response with meal attributes' do
-      json_response = JSON.parse(response.body)
-      expect(hash_body.keys).to match_array(
-        [
-          :id,
-          :user_id,
-          :name,
-          :pickup_time,
-          :cook_provides_packaging,
-          :amount,
-          :created_at,
-          :updated_at,
-          :description,
-          :address,
-          :zip,
-          :city,
-          :tags
-        ]
-      )
+  describe 'GET show' do
+    it 'returns a 200' do
+      request.headers['Authorization'] = 'foo'
+      expect(response).to have_http_status(:ok)
     end
   end
-
 end

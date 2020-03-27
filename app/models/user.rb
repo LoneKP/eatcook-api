@@ -13,7 +13,7 @@ class User < ApplicationRecord
     orders.where('pickup_time < ?', Time.now)
   end
 
-  def meals_ordered_by_user_in_the_future
+  def meals_to_be_ordered_by_user_in_the_future
     orders.where('pickup_time > ?', Time.now)
   end
 
